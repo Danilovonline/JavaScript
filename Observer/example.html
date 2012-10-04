@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example Observer</title>
+    <script type="text/javascript" src="Observer.js"></script>
+    <script type="text/javascript">
+
+        // первые подписчики
+        init();
+
+        // добавим еще одного подписчика
+        __Observer.subscribe('clickRed', function(checked){
+            log('RED is ' + (checked ? 'checked' : 'unchecked'));
+        });
+
+
+        function init() {
+            __Observer.subscribe('clickRed', function(checked){log('red')});
+            __Observer.subscribe('clickGreen', function(checked){log('green')});
+            __Observer.subscribe('clickBlue', function(checked){log('blue')});
+        }
+
+        function log(txt) {
+            E('divLog').innerHTML += txt + '<br />';
+        }
+
+        function E(id) {
+            return document.getElementById(id);
+        }
+    </script>
+</head>
+<body>
+    <div style="color: red;">
+        <input type="checkbox" id="cbRed" onclick="__Observer.publish('clickRed', E('cbRed').checked)"><label for="cbRed"> Red</label>
+    </div>
+    <div style="color: green;">
+        <input type="checkbox" id="cbGreen" onclick="__Observer.publish('clickGreen', E('cbGreen').checked);"><label for="cbGreen"> Green</label>
+    </div>
+    <div style="color: blue;">
+        <input type="checkbox" id="cbBlue" onclick="__Observer.publish('clickBlue', E('cbBlue').checked);"><label for="cbBlue"> Blue</label>
+    </div>
+
+    <div id="divLog" style="border: 1px solid gray; background-color: #f5f5dc;"></div>
+</body>
+</html>
